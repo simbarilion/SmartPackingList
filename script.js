@@ -1,3 +1,17 @@
+/**
+* Умный список вещей для поездки
+* Поддерживает несколько типов поездок, погодные условия и постоянное состояние пользовательского интерфейса.
+* Функции:
+* - динамическая генерация списков вещей
+* - сохранение данных в localStorage
+* - экспорт в Markdown
+* - интерактивный пользовательский интерфейс
+*/
+
+/**
+// Набор правил, определяющих стандартные предметы для упаковки в зависимости от типа поездки
+// @type {Object}
+*/
 const rules = {
   beach: {
     clothing: ["Swimwear", "Beach towel", "Flip-flops"]
@@ -17,12 +31,26 @@ const rules = {
 
 const randomTrips = ["beach", "business", "camping", "leisure"];
 
+
+/**
+* Форматирует название товара с указанием количества, если count > 1.
+* Пример: "Рубашки (3)" или "Одежда для сна"
+* @param {string} name - Название товара
+* @param {number} count - Количество товара
+* @returns {string} - Отформатированная метка
+*/
 function qtyLabel(name, count){
   return count>1?`${name} (${count})`:name;
 }
 
-//  GENERATE
 
+/**
+// Генерирует список вещей для поездки на основе параметров путешествия.
+// @param {number} days - Продолжительность поездки в днях
+// @param {string} type - Тип поездки (пляжная, деловая, кемпинговая, отдых)
+// @param {string} temp - Ожидаемые погодные условия (холодно, жарко, умеренно)
+// @returns {Object} categories - Структурированный список вещей, сгруппированный по категориям
+*/
 function generatePacking(days, type, temp){
   const cat = {
     "Clothing":[],
@@ -31,7 +59,7 @@ function generatePacking(days, type, temp){
     "Misc":[]
   };
 
-  // base logic
+  // Базовая логика для расчета количества одежды в зависимости от продолжительности поездки
   const underwear = days;
   const socks = days;
   const shirts = Math.ceil(days);
@@ -43,7 +71,7 @@ function generatePacking(days, type, temp){
   cat.Clothing.push(qtyLabel('Pants',pants));
   cat.Clothing.push('Sleepwear');
 
-  // apply rules
+  // Правила в зависимости от типа поездки
   const tripRules = rules[type];
   if (tripRules) {
     if (tripRules.clothing) cat.Clothing.push(...tripRules.clothing);
@@ -62,7 +90,7 @@ function generatePacking(days, type, temp){
     cat.Toiletries.push("Sunscreen");
   }
 
-  // fixed items
+  // Скорректированные значения для всех типов поездок
   cat.Toiletries.push(
     "Toothbrush",
     "Toothpaste",
@@ -87,12 +115,18 @@ function generatePacking(days, type, temp){
   return cat;
 }
 
+
+/**
+// Отображает пользовательский интерфейс списка товаров в DOM с сохранением состояния флажков.
+// @param {Object} categories - Товары для упаковки, сгруппированные по категориям
+// @param {string} storageKey - Ключ для сохранения состояния в localStorage
+*/
 function renderChecklist(categories, storageKey){
   const container = document.getElementById('checklist');
   
-  // EMPTY STATE
+  // Пустой запрос данных - отображает приглашение к генерации списка
   if (!categories) {
-    container.innerHTML = "<p>Generate your packing list ✈️</p>";
+    container.innerHTML = "<p>Generate your packing list </p>";
     return;
   }
   container.innerHTML = "";
@@ -118,7 +152,6 @@ function renderChecklist(categories, storageKey){
       label.htmlFor = id;
       label.textContent = it;
 
-      // restore saved state
       if(saved[id]){
         cb.checked = true;
         li.classList.add('packed');
@@ -144,7 +177,16 @@ function renderChecklist(categories, storageKey){
   });
 }
 
-// build markdown from categories and saved packed state
+
+/**
+// Преобразует список необходимых вещей в формат Markdown.
+// @param {number} - дней
+// @param {string} - тип
+// @param {string} - временный
+// @param {Object} - категории
+// @param {string} - ключ хранилища
+// @returns {string} - представление списка необходимых вещей в формате Markdown
+*/
 function buildMarkdown(days, type, temp, categories, storageKey){
   const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
   let md = `# Packing Checklist — ${days} day${days>1?'s':''} (${type}, ${temp})\n\n`;
@@ -162,7 +204,11 @@ function buildMarkdown(days, type, temp, categories, storageKey){
   return md;
 }
 
-// export current packing list as Markdown file
+
+/**
+// Экспортирует список необходимых вещей в загружаемый файл Markdown.
+// Использует API Blob и запускает загрузку файла в браузере
+*/
 function exportCurrentList(){
   const days = parseInt(document.getElementById('days').value,10) || 1;
   const type = document.getElementById('tripType').value;
@@ -180,7 +226,20 @@ function exportCurrentList(){
   setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 500);
 }
 
-//EVENTS
+/**
+// Обработчики событий пользовательского интерфейса для приложения «Умный список вещей».
+// Обрабатывают:
+// - Отправку формы (генерация списка вещей)
+// - Очистку сохраненного состояния списка вещей
+// - Печать списка вещей
+// - Генерацию случайной поездки
+// - Восстановление сохраненного состояния при загрузке страницы
+// Используют localStorage для сохранения данных:
+// - 'prefs' хранит настройки пользователя (дни, тип, температура)
+// - 'packed:*' хранит состояния флажков для каждой конфигурации
+*/
+
+// Генерирует список вещей на основе введенных пользователем данных и сохраняет настройки в localStorage
 document.getElementById("prefs").addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -190,11 +249,10 @@ document.getElementById("prefs").addEventListener("submit", (e) => {
   const categories = generatePacking(days,type,temp);
   const storageKey = `packed:${days}:${type}:${temp}`;
   renderChecklist(categories, storageKey);
-  // persist current preferences so we can restore on reload
   localStorage.setItem('prefs', JSON.stringify({days,type,temp}));
 });
 
-// CLEAR
+// Очищает текущий контрольный список и удаляет сохраненное состояние упаковки для текущей конфигурации из localStorage
 document.getElementById("clear").addEventListener("click", () => {
   const days = parseInt(document.getElementById('days').value,10) || 1;
   const type = document.getElementById('tripType').value;
@@ -205,18 +263,18 @@ document.getElementById("clear").addEventListener("click", () => {
 });
 
 
-// PRINT
+// Открывает диалоговое окно печати текущего контрольного списка в браузере
 document.getElementById("print").addEventListener("click", () => {
   window.print();
 });
 
-// RANDOM TRIP
+// Выбирает случайный тип поездки для быстрого создания списка
 document.getElementById("random").addEventListener("click", () => {
   const random = randomTrips[Math.floor(Math.random() * randomTrips.length)];
   document.getElementById("tripType").value = random;
 });
 
-// INIT
+// Восстанавливает сохраненные пользовательские настройки и генерирует контрольный список заново при загрузке страницы
 window.addEventListener("DOMContentLoaded", () => {
   const saved = JSON.parse(localStorage.getItem("prefs") || "null");
 

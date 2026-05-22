@@ -1,19 +1,107 @@
-Smart Packing List
+# 🧳 Умный список вещей для поездки
 
-A tiny vanilla JavaScript app that generates a categorized packing checklist based on number of days, trip type, and temperature.
+Небольшое веб-приложение, генерирующее персонализированный список вещей для поездки на основе типа поездки, продолжительности и погодных условий.
 
-Usage
+---
 
-- Open index.html in a browser.
-- Enter your trip preferences and click "Generate List".
-- Use the checkboxes to mark packed items, or click "Print" to print the checklist.
+## 🚀 Функции
 
-Files
+- Динамическая генерация списка вещей
+- Типы поездок: пляж, деловая поездка, кемпинг, отдых
+- Корректировка в зависимости от погоды (холодно/жарко/умеренно)
+- Интерактивный список с отслеживанием прогресса
+- Сохранение состояния с помощью localStorage
+- Экспорт списка вещей в файл Markdown
+- Генератор случайных поездок
+- Адаптивный пользовательский интерфейс
 
-- index.html — main UI
-- styles.css — basic styling
-- script.js — generation logic
+---
 
-Notes
+## 🧠 Как это работает
 
-This is a minimal, client-side app. No server required.
+Приложение использует систему правил для генерации списка вещей для поездки.
+Каждый тип поездки и погодные условия динамически изменяют базовый список вещей.
+
+Выбор пользователя сохраняется локально в браузере с помощью localStorage.
+
+---
+
+## 📦 Технологический стек
+
+- HTML5
+- CSS3 (сетка + адаптивный дизайн)
+- Чистый JavaScript (без фреймворков)
+
+---
+
+## ▶️ Как запустить локально
+
+Откройте:
+
+index.html
+
+или используйте расширение VS Code Live Server.
+
+---
+
+## 🌐 Живая демонстрация
+
+https://YOUR_USERNAME.github.io/SmartPackingList/
+
+---
+
+## 🧩 Структура проекта
+
+    /SmartPackingList
+    ├── index.html
+    ├── styles.css
+    ├── script.js
+    └── README.md
+
+---
+
+## 🤖 Использование AI (Claude Code)
+
+Проект частично разработан с использованием Claude Code.
+AI использовался для генерации начальной структуры, логики пользовательского интерфейса и правил генерации контрольных списков.
+
+Использованные промпты:
+- Генерация основы:
+Create a simple vanilla JS web app: Smart Packing List generator. It should have a form (days, trip type, temperature) and generate a categorized checklist.
+Результат: удовлетворительный, необходимо уточнить правила сбора вещей.
+- Дополнительная проработка бизнес-логики:
+Implement packing rules: for cold add coat and sweater, for hot add shorts and t-shirts. Clothing amounts depend on trip days.
+Результат: хороший, необходимо протестировать граничные случаи.
+- Улучшение UI:
+Render the result as grouped checklist with checkboxes and allow marking items as packed.
+Результат: удовлетворительный, требует ручной корректировки значений в styles.css и шаблона index.html.
+- Добавление дополниртельного функционала:
+Add localStorage persistence so user progress is saved automatically.
+Результат: отличный.
+Add a button that exports current packing list to Markdown format.
+Результат: отличный.
+Ручная работа включала в себя уточнение макета пользовательского интерфейса, исправление граничных случаев логики, проверку работы приложения и улучшение UX.
+
+---
+
+## ✨ Возможные улучшения
+
+- Добавление индикатора прогресса (например, % собранных вещей).
+- Поддержка нескольких сохранённых поездок (профили поездок).
+- Календарный режим планирования поездки.
+- Интеграция с погодным API для автоматического определения температуры.
+- Умные рекомендации на основе истории поездок пользователя.
+
+---
+
+## Автор
+
+Разработано в рамках тестового задания.
+
+Надежда Попова
+
+Python Developer
+
+📧 nadezhdapopova13@yandex.ru
+
+🔗 GitHub: simbarilion
