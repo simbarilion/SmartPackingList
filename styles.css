@@ -48,7 +48,10 @@ select {
 }
 
 .actions {
-    margin-top: 12px
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 button {
@@ -59,7 +62,8 @@ button {
     border-radius: 6px;
     margin-right: 8px;
     transition: 0.2s;
-    cursor: pointer
+    cursor: pointer;
+    white-space: nowrap;
 }
 
 button:hover{
@@ -115,7 +119,7 @@ input[type=checkbox] {
 
 .layout{
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
+  grid-template-columns: 1.6fr 1fr;
   gap: 16px;
   align-items: start;
 }
