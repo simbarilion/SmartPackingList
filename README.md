@@ -75,7 +75,7 @@ Implement packing rules: for cold add coat and sweater, for hot add shorts and t
 - Улучшение UI:
 Render the result as grouped checklist with checkboxes and allow marking items as packed.
 Результат: удовлетворительный, требует ручной корректировки значений в styles.css и шаблона index.html.
-- Добавление дополниртельного функционала:
+- Добавление дополнительного функционала:
 Add localStorage persistence so user progress is saved automatically.
 Результат: отличный.
 Add a button that exports current packing list to Markdown format.
