@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Smart Packing List</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <div class="layout">
+      <form id="prefs" class="card">
+        <label>
+          Days:
+          <input id="days" type="number" min="1" max="30" value="3">
+        </label>
+
+        <label>
+          Trip type:
+          <select id="tripType">
+            <option value="leisure">Leisure</option>
+            <option value="business">Business</option>
+            <option value="camping">Camping</option>
+            <option value="beach">Beach</option>
+          </select>
+        </label>
+
+        <label>
+          Expected temperature:
+          <select id="temp">
+            <option value="mild">Mild</option>
+            <option value="hot">Hot</option>
+            <option value="cold">Cold</option>
+          </select>
+        </label>
+
+        <div class="actions">
+          <button type="submit" id="generate">Generate List</button>
+          <button type="button" id="clear">Clear</button>
+          <button type="button" id="print">Print</button>
+          <button type="button" id="exportMd">Export MD</button>
+          <button type="button" id="random">Random Trip</button>
+        </div>
+      </form>
+
+      <section id="result" class="card">
+        <h2>Packing Checklist</h2>
+        <div id="checklist"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
