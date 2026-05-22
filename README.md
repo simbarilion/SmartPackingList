@@ -46,7 +46,7 @@ index.html
 
 ## 🌐 Живая демонстрация
 
-https://YOUR_USERNAME.github.io/SmartPackingList/
+https://simbarilion.github.io/SmartPackingList/
 
 ---
 
