@@ -214,6 +214,7 @@ function exportCurrentList(){
   const type = document.getElementById('tripType').value;
   const temp = document.getElementById('temp').value;
   const categories = generatePacking(days,type,temp);
+  if (!categories) return;
   const storageKey = `packed:${days}:${type}:${temp}`;
   const md = buildMarkdown(days,type,temp,categories,storageKey);
   const blob = new Blob([md], {type: 'text/markdown;charset=utf-8'});
@@ -273,6 +274,8 @@ document.getElementById("random").addEventListener("click", () => {
   const random = randomTrips[Math.floor(Math.random() * randomTrips.length)];
   document.getElementById("tripType").value = random;
 });
+
+document.getElementById("exportMd").addEventListener("click", exportCurrentList);
 
 // Восстанавливает сохраненные пользовательские настройки и генерирует контрольный список заново при загрузке страницы
 window.addEventListener("DOMContentLoaded", () => {
