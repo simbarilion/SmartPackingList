@@ -88,10 +88,14 @@ button:hover{
 }
 
 button#clear {
-    background: #8b787b
+    background: #bbadade1
 }
 
 button#print {
+    background: #4681da
+}
+
+button#exportMd {
     background: #4681da
 }
 
